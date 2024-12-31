@@ -1,0 +1,53 @@
+.listings {
+  margin-top: 50px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.total-jobs {
+  margin-bottom: 40px;
+  color: #7d7d7d;
+}
+
+.listing {
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  border: 1px solid #ebebeb;
+  border-radius: 5px;
+  padding: 30px 70px;
+
+  transition: all 200ms;
+}
+
+.listing:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.listing .job-title {
+  font-weight: bold;
+  display: block;
+  color: #444;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  position: sticky;
+  text-decoration: none;
+}
+
+.listing .job-company {
+  margin-bottom: 20px;
+  display: block;
+}
+
+.posted {
+  background: #c62300;
+  color: #fff2f0;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  display: inline-block;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.star-icon {
+  margin-left: 10px;
+}

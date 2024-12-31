@@ -1,0 +1,46 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.flex {
+  display: flex;
+  gap: 40px;
+}
+
+button,
+.btn {
+  all: unset;
+  background: #eee;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.9rem;
+}
+
+button.save {
+  /* background: rgb(253, 29, 29);
+  background: linear-gradient(
+    45deg,
+    rgba(253, 29, 29, 1) 0%,
+    rgba(255, 84, 39, 1) 100%
+  );
+  color: #fff; */
+  margin-right: 15px;
+}
+
+button.applied {
+  background: #ff5d44;
+  color: #fff;
+}
+

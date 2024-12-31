@@ -1,0 +1,19 @@
+div.tabs {
+  margin-top: 70px;
+  display: flex;
+  gap: 10px;
+
+  justify-content: center;
+}
+
+div.tabs .tab {
+  padding: 5px 20px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+
+  cursor: pointer;
+}
+
+div.tabs .tab.active {
+  background: #ebebeb;
+}
