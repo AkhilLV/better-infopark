@@ -62,6 +62,11 @@ if batch_insert_data:
     cur.executemany("INSERT INTO jobs (job_id, job_title, job_link, company_name, company_link, last_date, date_added) VALUES(?, ?, ?, ?, ?, ?, ?)", batch_insert_data)
     con.commit()
 
+def adapt_datetime_iso(val):
+    """Adapt datetime.datetime to timezone-naive ISO 8601 date."""
+    return val.isoformat()
 
-cur.execute("UPDATE trivia SET last_updated = ? AND new_jobs = ?", [now, len(batch_insert_data)])
+sqlite3.register_adapter(datetime, adapt_datetime_iso)
+
+cur.execute("UPDATE trivia SET last_updated = ?", [now])
 con.commit()
