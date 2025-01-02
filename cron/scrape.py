@@ -62,6 +62,7 @@ if batch_insert_data:
     cur.executemany("INSERT INTO jobs (job_id, job_title, job_link, company_name, company_link, last_date, date_added) VALUES(?, ?, ?, ?, ?, ?, ?)", batch_insert_data)
     con.commit()
 
+# sqlite3 default adapter and converter deprecated as of python 3.12
 def adapt_datetime_iso(val):
     """Adapt datetime.datetime to timezone-naive ISO 8601 date."""
     return val.isoformat()
