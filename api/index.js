@@ -8,9 +8,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json()); // For parsing application/json
-app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 
 app.get("/api", (req, res) => {
   const today = new Date().toISOString().split("T")[0];
