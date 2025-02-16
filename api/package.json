@@ -1,10 +1,9 @@
 {
-  "name": "api",
+  "name": "better-infopark-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API layer for the better-infopark. Better sorting capabilities and analysis features",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "start": "NODE_ENV=\"production\" node index.js"
   },

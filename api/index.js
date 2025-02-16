@@ -21,7 +21,7 @@ app.get("/api/jobs", (req, res) => {
 app.get("/api/jobs/stats", (req, res) => {
   const row = db
     .prepare(
-      "SELECT count(job_id) AS newJobs, date_added as date from jobs GROUP BY date(date_added);"
+      "SELECT count(job_id) AS newJobs, date_added as date from jobs GROUP BY date(date_added)"
     )
     .all();
 
