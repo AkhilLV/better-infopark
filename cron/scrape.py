@@ -1,12 +1,13 @@
 import concurrent.futures
 import requests
 import sqlite3
-import urllib3
 import time
 
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+import urllib3
+urllib3.disable_warnings() # Disable SSL warnings, as the site is not using SSL
 
 def convert_date_to_iso(date_str):
     month_mapping = {
@@ -36,8 +37,6 @@ def fetch_page_listing(page):
     return page_soup.select("tbody tr")
 
 
-urllib3.disable_warnings() # Disable SSL warnings, as the site is not using SSL
-
 r = requests.get("https://infopark.in/companies/job-search", verify = False)
 
 soup = BeautifulSoup(r.text, "lxml")
@@ -45,7 +44,6 @@ soup = BeautifulSoup(r.text, "lxml")
 NUMBER_OF_PAGES = int(soup.select(".pagination a")[-2].text)
 
 print(f"Fetching: {NUMBER_OF_PAGES}")
-
 start = time.time()
 
 all_listings = []
@@ -60,6 +58,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 end = time.time()
 print(f"Fetched all listing in {end - start} seconds")
 print(f"Total number of listings: {len(all_listings)}")
+
 
 con = sqlite3.connect("../dataStore/data.db")
 cur = con.cursor()
@@ -76,8 +75,8 @@ for listing in all_listings:
     last_date = convert_date_to_iso(columns[2].text.strip())
     job_link = columns[3].find("a")["href"]
     
-    job_id = int(job_link.split("/")[-2])  # Extracting job_id from URL
-    company_id = job_link.split("/")[-1]  # Extracting company_id from URL
+    job_id = int(job_link.split("/")[-2])
+    company_id = job_link.split("/")[-1]
     company_link = f"https://infopark.in/companies/profile/{company_id}"
     
     res = cur.execute("SELECT job_id FROM jobs WHERE job_id = ?", [job_id])
