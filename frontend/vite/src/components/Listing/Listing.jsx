@@ -3,6 +3,8 @@ import "./Listing.css";
 
 import { useQuery } from "@tanstack/react-query";
 
+import { BASE_URL } from "../../api";
+
 function formatDate(inputDate) {
   const date = new Date(inputDate);
 
@@ -39,7 +41,7 @@ export default function Listing({ setTotalJobs }) {
   const { isPending, error, data } = useQuery({
     queryKey: ["jobListings"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:3000/api/jobs");
+      const response = await fetch(`${BASE_URL}/api/jobs`);
       return await response.json();
     },
   });

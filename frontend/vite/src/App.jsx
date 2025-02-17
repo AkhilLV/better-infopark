@@ -4,13 +4,15 @@ import { useState } from "react";
 import Hero from "@components/Hero/Hero";
 import Listing from "@components/Listing/Listing";
 
+import { BASE_URL } from "./api";
+
 function App() {
   const [totalJobs, setTotalJobs] = useState(0);
 
   const { isPending, error, data } = useQuery({
     queryKey: ["jobStats"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:3000/api/jobs/stats");
+      const response = await fetch(`${BASE_URL}/api/jobs/stats`);
       return await response.json();
     },
   });
