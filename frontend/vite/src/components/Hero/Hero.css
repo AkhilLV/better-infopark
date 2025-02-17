@@ -20,6 +20,12 @@ header p {
   font-weight: 400;
 }
 
+@media (max-width: 768px) {
+  header p {
+    width: 90%;
+  }
+}
+
 header p span {
   color: #ff4527;
 }

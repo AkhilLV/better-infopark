@@ -64,6 +64,12 @@
   text-decoration: underline;
 }
 
+.tags {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
 .posted {
   background: #ad3636;
   color: #fff2f0;
@@ -71,19 +77,22 @@
   padding: 5px 10px;
   display: inline-block;
   border-radius: 5px;
-  margin-bottom: 20px;
 }
 
 .last-date {
   background: #ffe3e1;
-  margin-left: 15px;
   font-size: 0.9rem;
   padding: 5px 10px;
   display: inline-block;
   border-radius: 5px;
   /* border: 1px solid #444; */
-  margin-bottom: 20px;
 }
+
+/* @media (max-width: 768px) {
+  .tags {
+    flex-direction: column;
+  }
+} */
 
 .star-icon {
   margin-left: 10px;

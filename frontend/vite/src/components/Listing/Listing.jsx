@@ -67,12 +67,14 @@ export default function Listing({ setTotalJobs }) {
               : ""
           }`}
         >
-          <span className="posted">
-            Posted {formatDate(listing.date_added)}
-          </span>
-          <span className="last-date">
-            Apply before {formatDate(listing.last_date)}
-          </span>
+          <div className="tags">
+            <span className="posted">
+              Posted {formatDate(listing.date_added)}
+            </span>
+            <span className="last-date">
+              Apply before {formatDate(listing.last_date)}
+            </span>
+          </div>
           <a href={listing.company_link} className="job-company">
             {listing.company_name}
           </a>
