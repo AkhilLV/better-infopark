@@ -15,6 +15,7 @@ app.get("/api/jobs", (req, res) => {
   const row = db
     .prepare("SELECT * FROM jobs WHERE last_date >= ? ORDER BY date_added DESC")
     .all(today);
+
   res.json(row);
 });
 

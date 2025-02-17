@@ -1,9 +1,7 @@
+import { useEffect } from "react";
 import "./Listing.css";
-import starIcon from "@assets/star.svg";
 
 import { useQuery } from "@tanstack/react-query";
-
-import { useAppliedStore, useSavedStore } from "../../state/store";
 
 function formatDate(inputDate) {
   const date = new Date(inputDate);
@@ -23,6 +21,7 @@ function formatDate(inputDate) {
     "Nov",
     "Dec",
   ];
+
   const month = monthNames[date.getMonth()];
 
   // Function to get ordinal suffix
@@ -36,90 +35,48 @@ function formatDate(inputDate) {
   return `${day}${getOrdinal(day)} ${month}`;
 }
 
-export default function Listing({ activeTab }) {
-  const savedIds = useSavedStore((state) => state.savedIds);
-  const addSavedId = useSavedStore((state) => state.addSavedId);
-  const removeSavedId = useSavedStore((state) => state.removeSavedId);
-
-  const appliedIds = useAppliedStore((state) => state.appliedIds);
-  const addAppliedId = useAppliedStore((state) => state.addAppliedId);
-
+export default function Listing({ setTotalJobs }) {
   const { isPending, error, data } = useQuery({
     queryKey: ["jobListings"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:3000/api");
+      const response = await fetch("http://localhost:3000/api/jobs");
       return await response.json();
     },
   });
+
+  useEffect(() => {
+    setTotalJobs(data?.length);
+  }, [data, setTotalJobs]);
 
   if (isPending) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
 
-  const filteredData = data.filter((listing) => {
-    if (activeTab === "all") return !appliedIds.includes(listing.job_id);
-    if (activeTab === "saved") return savedIds.includes(listing.job_id);
-    if (activeTab === "applied") return appliedIds.includes(listing.job_id);
-    return true;
-  });
-
-  const handleAppliedClick = (jobId) => {
-    addAppliedId(jobId);
-    removeSavedId(jobId);
-  };
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="listings">
-      {/* <p className="total-jobs">Showing {filteredData.length} job listings</p> */}
-
-      {filteredData.map((listing) => (
-        <div key={listing.job_id} className="listing">
-          {" "}
+      {data.map((listing) => (
+        <div
+          key={listing.job_id}
+          className={`listing ${
+            new Date(listing.date_added).toISOString().split("T")[0] === today
+              ? "new"
+              : ""
+          }`}
+        >
           <span className="posted">
             Posted {formatDate(listing.date_added)}
+          </span>
+          <span className="last-date">
+            Apply before {formatDate(listing.last_date)}
           </span>
           <a href={listing.company_link} className="job-company">
             {listing.company_name}
           </a>
-          {/* <p>Apply before {formatDate(listing.last_date)}</p>  */}
           <a href={listing.job_link} className="job-title">
             {listing.job_title}
-            {savedIds.includes(listing.job_id) && (
-              <img
-                width={15}
-                src={starIcon}
-                alt="icon of a star"
-                className="star-icon"
-              />
-            )}
           </a>
-          {/* not correct. a jobs can be both saved and applied */}
-          <div className="actions">
-            {activeTab !== "saved" ? (
-              <button
-                className="save"
-                type="button"
-                onClick={() => addSavedId(listing.job_id)}
-              >
-                Save for later
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => removeSavedId(listing.job_id)}
-              >
-                Remove from saved
-              </button>
-            )}
-
-            <button
-              type="button"
-              className="applied"
-              onClick={(e) => handleAppliedClick(listing.job_id)}
-            >
-              Mark applied
-            </button>
-          </div>
         </div>
       ))}
     </div>
